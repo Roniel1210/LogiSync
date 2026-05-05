@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Search, Network, FileIcon, Filter, RefreshCw, Server, WifiOff } from 'lucide-react';
+import { Search, FileIcon, Filter, RefreshCw, Server, WifiOff, BarChart3, HardDrive, Tag, Clock } from 'lucide-react';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 import { fetchN8n } from '../lib/n8n';
@@ -122,28 +122,62 @@ export function RepositoryView() {
         <div className="col-span-1 lg:col-span-5 bg-white rounded-xl shadow-[0px_2px_8px_0px_rgba(0,0,0,0.04)] border border-slate-100/60 flex flex-col overflow-hidden">
           <div className="p-5 border-b border-slate-100 flex items-center gap-2">
             <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-              <Network className="w-4 h-4 text-indigo-500" /> Representacion Vectorial
+              <BarChart3 className="w-4 h-4 text-indigo-500" /> Estadísticas del Repositorio
             </h2>
           </div>
-          <div className="flex-1 p-6 flex flex-col justify-center items-center bg-slate-50/50 relative min-h-[300px]">
-            <div className="absolute inset-6 rounded-xl bg-[#0f172a] overflow-hidden flex items-center justify-center border border-slate-800 shadow-xl">
-              <div className="relative w-full h-full max-w-[300px] max-h-[300px]">
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" style={{ stroke: 'rgba(79, 70, 229, 0.3)', strokeWidth: 0.5 }}>
-                  <line x1="20" y1="50" x2="80" y2="30" />
-                  <line x1="20" y1="50" x2="70" y2="80" />
-                  <line x1="80" y1="30" x2="70" y2="80" />
-                  <line x1="50" y1="10" x2="20" y2="50" />
-                </svg>
-                <div className="absolute w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_12px_#818cf8]" style={{ left: '18%', top: '48%' }}></div>
-                <div className="absolute w-1.5 h-1.5 rounded-full bg-purple-400" style={{ left: '78%', top: '28%' }}></div>
-                <div className="absolute w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ left: '68%', top: '78%' }}></div>
-                <div className="absolute w-1.5 h-1.5 rounded-full bg-blue-300" style={{ left: '48%', top: '8%' }}></div>
+          <div className="flex-1 p-5 flex flex-col gap-4">
+            {/* Total docs */}
+            <div className="bg-indigo-50 rounded-xl p-4 flex items-center gap-4 border border-indigo-100">
+              <div className="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
+                <FileIcon className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-indigo-700">{visibleDocuments.length}</p>
+                <p className="text-xs text-indigo-500 font-medium mt-0.5">Documentos Indexados</p>
+              </div>
+            </div>
 
-                <div className="absolute left-1/2 top-1/2 -translate-x-[40%] -translate-y-1/2 bg-indigo-900/60 border border-indigo-500/30 rounded p-2.5 backdrop-blur-md">
-                  <p className="text-[9px] text-indigo-200 font-mono tracking-widest break-all w-28 leading-relaxed">
-                    TENSOR: [0.124, -0.052, 0.891, 0.442, -0.199...]
-                  </p>
-                </div>
+            {/* Type breakdown */}
+            <div className="bg-white rounded-xl p-4 border border-slate-100 flex flex-col gap-3">
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                <Tag className="w-3.5 h-3.5" /> Distribución por Tipo
+              </p>
+              {Array.from(new Set(visibleDocuments.map(d => d.type))).map((type) => {
+                const count = visibleDocuments.filter(d => d.type === type).length;
+                const pct = Math.round((count / visibleDocuments.length) * 100);
+                return (
+                  <div key={type}>
+                    <div className="flex justify-between text-xs font-semibold mb-1">
+                      <span className="text-slate-700">{type}</span>
+                      <span className="text-slate-500">{count} doc{count !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-indigo-500 rounded-full transition-all duration-500" style={{ width: `${pct}%` }}></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Storage */}
+            <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-4">
+              <div className="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center shrink-0">
+                <HardDrive className="w-4 h-4 text-slate-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Almacenamiento</p>
+                <p className="text-sm font-bold text-slate-700 mt-0.5">{visibleDocuments.length > 0 ? visibleDocuments.length + ' archivos disponibles' : 'Sin archivos'}</p>
+              </div>
+            </div>
+
+            {/* Last updated */}
+            <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-4">
+              <div className="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center shrink-0">
+                <Clock className="w-4 h-4 text-slate-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Último Ingreso</p>
+                <p className="text-sm font-bold text-slate-700 mt-0.5">{visibleDocuments[0]?.time ?? '—'}</p>
               </div>
             </div>
           </div>
