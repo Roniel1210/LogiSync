@@ -1,0 +1,49 @@
+{
+  "name": "reports-summary",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "reports-summary",
+        "httpMethod": "GET",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-reports",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: {\n  reports: [\n    { id: 1, title: 'Analisis de Eficiencia Global', type: 'Operaciones', date: 'Octubre 2026', format: 'PDF', size: '2.4 MB', path: 'C:/Users/PC6 - 2/LogiSync/data/reports/generated/analisis-eficiencia-global.pdf' },\n    { id: 2, title: 'Auditoria de Proveedores Q3', type: 'Finanzas', date: 'Q3 2026', format: 'XLSX', size: '5.1 MB', path: 'C:/Users/PC6 - 2/LogiSync/data/reports/generated/auditoria-proveedores-q3.xlsx' },\n    { id: 3, title: 'Reporte de Riesgos (Prediccion IA)', type: 'Predictivo', date: 'Ultimos 30 dias', format: 'CSV', size: '1.2 MB', path: 'C:/Users/PC6 - 2/LogiSync/data/reports/generated/reporte-riesgos.csv' }\n  ],\n  scheduledReports: [\n    { name: 'Resumen Diario de Operaciones', frequency: 'Diario, 08:00 AM', next: 'Manana' },\n    { name: 'Cierre Financiero Semanal', frequency: 'Viernes, 18:00 PM', next: 'En 3 dias' },\n    { name: 'Alertas Predictivas de Stock', frequency: 'Lunes, 06:00 AM', next: 'En 6 dias' }\n  ]\n}}];"
+      },
+      "id": "code-reports",
+      "name": "Reports Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-reports",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [780, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Reports Data", "type": "main", "index": 0 }]]
+    },
+    "Reports Data": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}

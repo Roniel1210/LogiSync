@@ -1,0 +1,57 @@
+﻿{
+    "reports":  [
+                    {
+                        "id":  4,
+                        "title":  "Reporte Operaciones 20260505-115628",
+                        "type":  "Operaciones",
+                        "date":  "05/05/2026 11:56",
+                        "format":  "CSV",
+                        "size":  "0.1 KB",
+                        "path":  "C:/Users/PC6 - 2/LogiSync/data/reports/generated/reporte-operaciones-20260505-115628.csv"
+                    },
+                    {
+                        "id":  1,
+                        "title":  "Analisis de Eficiencia Global",
+                        "type":  "Operaciones",
+                        "date":  "Octubre 2026",
+                        "format":  "PDF",
+                        "size":  "2.4 MB",
+                        "path":  "C:/Users/PC6 - 2/LogiSync/data/reports/generated/analisis-eficiencia-global.pdf"
+                    },
+                    {
+                        "id":  2,
+                        "title":  "Auditoria de Proveedores Q3",
+                        "type":  "Finanzas",
+                        "date":  "Q3 2026",
+                        "format":  "XLSX",
+                        "size":  "5.1 MB",
+                        "path":  "C:/Users/PC6 - 2/LogiSync/data/reports/generated/auditoria-proveedores-q3.xlsx"
+                    },
+                    {
+                        "id":  3,
+                        "title":  "Reporte de Riesgos (Prediccion IA)",
+                        "type":  "Predictivo",
+                        "date":  "Ultimos 30 dias",
+                        "format":  "CSV",
+                        "size":  "1.2 MB",
+                        "path":  "C:/Users/PC6 - 2/LogiSync/data/reports/generated/reporte-riesgos.csv"
+                    }
+                ],
+    "scheduledReports":  [
+                             {
+                                 "name":  "Resumen Diario de Operaciones",
+                                 "frequency":  "Diario, 08:00 AM",
+                                 "next":  "Manana"
+                             },
+                             {
+                                 "name":  "Cierre Financiero Semanal",
+                                 "frequency":  "Viernes, 18:00 PM",
+                                 "next":  "En 3 dias"
+                             },
+                             {
+                                 "name":  "Alertas Predictivas de Stock",
+                                 "frequency":  "Lunes, 06:00 AM",
+                                 "next":  "En 6 dias"
+                             }
+                         ]
+}

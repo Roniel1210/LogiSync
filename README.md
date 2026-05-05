@@ -2,11 +2,13 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# 📦 LogiSync: Gestión Logística con IA
 
-This contains everything you need to run your app locally.
+LogiSync es una plataforma de control logístico inteligente que utiliza IA para optimizar inventarios, predecir demanda y gestionar documentos mediante búsqueda vectorial.
 
-View your app in AI Studio: https://ai.studio/apps/f7ef6f65-a982-4ebc-a86a-818d871001fd
+Para una descripción detallada de la arquitectura, tecnologías y funcionalidades, consulta la **[Documentación Completa (DOCUMENTATION.md)](./DOCUMENTATION.md)**.
+
+## 🚀 Inicio Rápido
 
 ## Run Locally
 

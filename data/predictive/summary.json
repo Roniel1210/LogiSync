@@ -1,0 +1,18 @@
+{
+  "forecastData": [
+    { "name": "Sem 1", "inventario": 4000, "demanda": 2400 },
+    { "name": "Sem 2", "inventario": 3000, "demanda": 1398 },
+    { "name": "Sem 3", "inventario": 2000, "demanda": 4800 },
+    { "name": "Sem 4", "inventario": 2780, "demanda": 3908 }
+  ],
+  "alert": {
+    "active": true,
+    "week": "Sem 3",
+    "shortageUnits": 2800
+  },
+  "decisionText": "La demanda inferida para la Semana 3 supera el stock de seguridad en 2,800 unidades debido a un pico estimado.",
+  "sensitivity": {
+    "projectionConfidence": 89,
+    "climateRisk": 22
+  }
+}

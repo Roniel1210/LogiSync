@@ -1,0 +1,49 @@
+{
+  "name": "repository-search",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "repository-search",
+        "httpMethod": "GET",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-repository",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const q = (($json.query?.q || '') + '').toLowerCase();\nconst documents = [\n  { id: 1, title: 'Contrato Marco Logistics 2024', type: 'CONTRATO', time: 'HACE 2H', size: '2.4 MB', match: 94, path: 'C:/Users/PC6 - 2/LogiSync/data/repository/docs/contrato-marco-logistics-2024.pdf' },\n  { id: 2, title: 'Guia de Remision GR-8821', type: 'TRANSPORTE', time: 'HACE 5H', size: '145 KB', match: 88, path: 'C:/Users/PC6 - 2/LogiSync/data/repository/docs/gr-8821.pdf' },\n  { id: 3, title: 'Factura Proveedor TechCorp', type: 'FINANZAS', time: 'AYER', size: '320 KB', match: 76, path: 'C:/Users/PC6 - 2/LogiSync/data/repository/docs/factura-techcorp.pdf' }\n];\nconst filtered = q ? documents.filter((doc) => JSON.stringify(doc).toLowerCase().includes(q)) : documents;\nreturn [{ json: { documents: filtered } }];"
+      },
+      "id": "code-repository",
+      "name": "Repository Search",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-repository",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [780, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Repository Search", "type": "main", "index": 0 }]]
+    },
+    "Repository Search": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}
