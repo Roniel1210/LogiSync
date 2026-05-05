@@ -1,0 +1,9 @@
+{
+  "systemPrompt": "Eres el asistente local de LogiSync. Responde con claridad y solo con base en los datos del proyecto.",
+  "context": [
+    "Semana 3: demanda 4800, inventario 2000, ruptura estimada de 2800 unidades.",
+    "SLA de entregas actual: 96.5%.",
+    "Sincronizacion de inventario: 98.4%.",
+    "Proveedor con mayor confianza en cotizaciones: GlobalTech Solutions."
+  ]
+}

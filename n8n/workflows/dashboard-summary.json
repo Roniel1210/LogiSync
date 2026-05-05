@@ -1,0 +1,49 @@
+{
+  "name": "dashboard-summary",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "dashboard-summary",
+        "httpMethod": "GET",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-dashboard",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: {\n  kpis: [\n    { label: 'Sincronizacion Inventario', value: '98.4%', change: '+2.1%', trend: 'up', subtitle: 'Vs mes anterior' },\n    { label: 'SLA de Entregas', value: '96.5%', change: '+0.5%', trend: 'up', subtitle: 'Vs mes anterior' },\n    { label: 'Optimizacion Compras', value: '$42.5k', change: '-1.5%', trend: 'down', subtitle: 'Vs mes anterior' },\n    { label: 'Nodos Activos', value: '1,248', change: '+7%', trend: 'up', subtitle: 'Vs mes anterior' }\n  ],\n  analyticsData: [\n    { day: '1', value: 160 }, { day: '2', value: 380 }, { day: '3', value: 190 }, { day: '4', value: 290 }\n  ],\n  quotes: [\n    { provider: 'GlobalTech Solutions', req: 'Semiconductores A', confidence: 98, cost: '$4,500' },\n    { provider: 'Nexus Dynamics', req: 'Semiconductores A', confidence: 92, cost: '$4,200' }\n  ],\n  transport: [\n    { name: 'Terrestre', value: 65, color: '#4f46e5' },\n    { name: 'Aereo', value: 20, color: '#8b5cf6' },\n    { name: 'Maritimo', value: 15, color: '#c4b5fd' }\n  ]\n}}];"
+      },
+      "id": "code-dashboard",
+      "name": "Dashboard Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-dashboard",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [780, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Dashboard Data", "type": "main", "index": 0 }]]
+    },
+    "Dashboard Data": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}

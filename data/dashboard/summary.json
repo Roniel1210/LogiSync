@@ -1,0 +1,24 @@
+{
+  "kpis": [
+    { "label": "Sincronizacion Inventario", "value": "98.4%", "change": "+2.1%", "trend": "up", "subtitle": "Vs mes anterior" },
+    { "label": "SLA de Entregas", "value": "96.5%", "change": "+0.5%", "trend": "up", "subtitle": "Vs mes anterior" },
+    { "label": "Optimizacion Compras", "value": "$42.5k", "change": "-1.5%", "trend": "down", "subtitle": "Vs mes anterior" },
+    { "label": "Nodos Activos", "value": "1,248", "change": "+7%", "trend": "up", "subtitle": "Vs mes anterior" }
+  ],
+  "analyticsData": [
+    { "day": "1", "value": 160 },
+    { "day": "2", "value": 380 },
+    { "day": "3", "value": 190 },
+    { "day": "4", "value": 290 },
+    { "day": "5", "value": 180 }
+  ],
+  "quotes": [
+    { "provider": "GlobalTech Solutions", "req": "Semiconductores A", "confidence": 98, "cost": "$4,500" },
+    { "provider": "Nexus Dynamics", "req": "Semiconductores A", "confidence": 92, "cost": "$4,200" }
+  ],
+  "transport": [
+    { "name": "Terrestre", "value": 65, "color": "#4f46e5" },
+    { "name": "Aereo", "value": 20, "color": "#8b5cf6" },
+    { "name": "Maritimo", "value": 15, "color": "#c4b5fd" }
+  ]
+}

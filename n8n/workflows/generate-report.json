@@ -1,0 +1,49 @@
+{
+  "name": "generate-report",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "generate-report",
+        "httpMethod": "POST",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-generate",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst fileName = `reporte-${now.getTime()}.csv`;\nconst path = `C:/Users/PC6 - 2/LogiSync/data/reports/generated/${fileName}`;\nreturn [{ json: { ok: true, fileName, path } }];"
+      },
+      "id": "code-generate",
+      "name": "Build Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-generate",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [780, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Build Metadata", "type": "main", "index": 0 }]]
+    },
+    "Build Metadata": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}
