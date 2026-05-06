@@ -11,17 +11,28 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [260, 300]
+      "position": [260, 300],
+      "webhookId": "50a7c444-bd29-4297-a5d2-83883f056fd6"
     },
     {
       "parameters": {
-        "jsCode": "const now = new Date();\nconst fileName = `reporte-${now.getTime()}.csv`;\nconst path = `C:/Users/PC6 - 2/LogiSync/data/reports/generated/${fileName}`;\nreturn [{ json: { ok: true, fileName, path } }];"
+        "command": "node /workspace/scripts/generate-report.cjs --type \"{{$json.body.type || 'Operaciones'}}\""
       },
-      "id": "code-generate",
-      "name": "Build Metadata",
+      "id": "execute-generate",
+      "name": "Execute Generate Report Script",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.stdout || $json.data || $json.output || Object.values($json)[0];\nreturn [{ json: JSON.parse(raw) }];"
+      },
+      "id": "parse-generate",
+      "name": "Parse Generate JSON",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [520, 300]
+      "position": [780, 300]
     },
     {
       "parameters": {
@@ -32,14 +43,17 @@
       "name": "Respond",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [780, 300]
+      "position": [1040, 300]
     }
   ],
   "connections": {
     "Webhook": {
-      "main": [[{ "node": "Build Metadata", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Execute Generate Report Script", "type": "main", "index": 0 }]]
     },
-    "Build Metadata": {
+    "Execute Generate Report Script": {
+      "main": [[{ "node": "Parse Generate JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Generate JSON": {
       "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
     }
   },

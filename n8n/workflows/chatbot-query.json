@@ -11,17 +11,28 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [260, 300]
+      "position": [260, 300],
+      "webhookId": "8b384b40-72d7-45b2-a8bf-fa67eb10eb45"
     },
     {
       "parameters": {
-        "jsCode": "const question = $json.body?.question || $json.question || '';\nconst lower = String(question).toLowerCase();\nlet answer = 'No encontre suficiente contexto local para responder con precision.';\nif (lower.includes('semana 3') || lower.includes('stock')) {\n  answer = 'La Semana 3 muestra demanda de 4,800 unidades frente a 2,000 de inventario. La ruptura estimada es de 2,800 unidades.';\n} else if (lower.includes('proveedor') || lower.includes('semiconductores')) {\n  answer = 'GlobalTech Solutions aparece como la opcion con mayor confianza para Semiconductores A con 98%.';\n} else if (lower.includes('flujo') || lower.includes('operativo')) {\n  answer = 'El flujo operativo mantiene 98.4% de sincronizacion de inventario y 96.5% de SLA de entregas.';\n}\nreturn [{ json: { answer } }];"
+        "command": "node /workspace/scripts/chatbot-query.cjs --question \"{{$json.body.question || $json.question || ''}}\""
       },
-      "id": "code-chatbot",
-      "name": "Chatbot Rules",
+      "id": "execute-chatbot",
+      "name": "Execute Chatbot Script",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.stdout || $json.data || $json.output || Object.values($json)[0];\nreturn [{ json: JSON.parse(raw) }];"
+      },
+      "id": "parse-chatbot",
+      "name": "Parse Chatbot JSON",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [520, 300]
+      "position": [780, 300]
     },
     {
       "parameters": {
@@ -32,14 +43,17 @@
       "name": "Respond",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [780, 300]
+      "position": [1040, 300]
     }
   ],
   "connections": {
     "Webhook": {
-      "main": [[{ "node": "Chatbot Rules", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Execute Chatbot Script", "type": "main", "index": 0 }]]
     },
-    "Chatbot Rules": {
+    "Execute Chatbot Script": {
+      "main": [[{ "node": "Parse Chatbot JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Chatbot JSON": {
       "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
     }
   },

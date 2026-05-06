@@ -1,14 +1,14 @@
 Write-Host "Dashboard"
-& "C:\Users\PC6 - 2\LogiSync\scripts\get-dashboard-summary.ps1"
+& (Join-Path $PSScriptRoot "get-dashboard-summary.ps1")
 Write-Host ""
 Write-Host "Predictive"
-& "C:\Users\PC6 - 2\LogiSync\scripts\get-predictive-summary.ps1"
+& (Join-Path $PSScriptRoot "get-predictive-summary.ps1")
 Write-Host ""
 Write-Host "Reports"
-& "C:\Users\PC6 - 2\LogiSync\scripts\get-reports-summary.ps1"
+& (Join-Path $PSScriptRoot "get-reports-summary.ps1")
 Write-Host ""
 Write-Host "Repository Search"
-& "C:\Users\PC6 - 2\LogiSync\scripts\search-repository.ps1" -Query "contrato"
+& (Join-Path $PSScriptRoot "search-repository.ps1") -Query "contrato"
 Write-Host ""
 Write-Host "Chatbot"
-& "C:\Users\PC6 - 2\LogiSync\scripts\chatbot-query.ps1" -Question "Explicame la semana 3"
+& (Join-Path $PSScriptRoot "chatbot-query.ps1") -Question "Explicame la semana 3"

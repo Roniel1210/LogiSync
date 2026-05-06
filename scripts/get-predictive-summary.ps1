@@ -1,2 +1,2 @@
-$path = "C:\Users\PC6 - 2\LogiSync\data\predictive\summary.json"
-Get-Content -Raw $path
+$scriptPath = Join-Path $PSScriptRoot "get-predictive-summary.cjs"
+node $scriptPath

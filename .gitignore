@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+n8n/storage/*
+!n8n/storage/.gitkeep
+data/reports/generated/*.csv

@@ -8,7 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "data:test": "powershell -ExecutionPolicy Bypass -File .\\scripts\\test-local-data.ps1",
+    "n8n:health": "powershell -ExecutionPolicy Bypass -File .\\scripts\\check-n8n-health.ps1",
+    "n8n:up": "docker compose -f docker-compose.n8n.yml up -d",
+    "n8n:down": "docker compose -f docker-compose.n8n.yml down",
+    "n8n:ps": "docker compose -f docker-compose.n8n.yml ps"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",

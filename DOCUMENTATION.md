@@ -81,6 +81,43 @@ Interfaz conversacional que permite interactuar con los datos del negocio:
    npm run dev
    ```
 
+## Datos operativos locales
+
+Cuando `n8n` esta levantado, la aplicacion puede trabajar con una fuente local coherente en vez de depender de datos visuales inventados.
+
+Archivos fuente:
+
+- `data/dashboard/summary.json`
+- `data/predictive/summary.json`
+- `data/reports/summary.json`
+- `data/repository/index.json`
+- `data/chatbot/knowledge.json`
+
+Flujo de cambio recomendado:
+
+1. Editar el JSON correspondiente
+2. Guardar el archivo
+3. Recargar la vista o pulsar `Actualizar`
+
+Ejemplos:
+
+- Si cambias `data/dashboard/summary.json`, cambian KPIs, graficas, cotizaciones y distribucion de carga del Dashboard.
+- Si cambias `data/predictive/summary.json`, cambian forecast, alerta, texto de decision y sensibilidad.
+- Si cambias `data/repository/index.json`, cambian resultados y metricas del Repositorio.
+- Si cambias `data/chatbot/knowledge.json`, cambian las respuestas base del asistente.
+
+## Reportes generados
+
+El workflow `generate-report` crea CSVs en `data/reports/generated/`.
+
+El contenido del CSV se arma con datos reales de:
+
+- `data/dashboard/summary.json`
+- `data/predictive/summary.json`
+- `data/reports/summary.json`
+
+Eso permite que el reporte exportado tenga coherencia con lo que la app muestra en pantalla.
+
 ## 📈 Roadmap y Próximas Mejoras
 - [ ] Integración completa del Chatbot con el historial vectorial real.
 - [ ] Notificaciones push para alertas de stock crítico.

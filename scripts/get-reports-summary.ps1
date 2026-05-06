@@ -1,2 +1,2 @@
-$path = "C:\Users\PC6 - 2\LogiSync\data\reports\summary.json"
-Get-Content -Raw $path
+$scriptPath = Join-Path $PSScriptRoot "get-reports-summary.cjs"
+node $scriptPath
