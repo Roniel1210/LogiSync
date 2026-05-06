@@ -1,6 +1,6 @@
 {
   "kpis": [
-    { "label": "Sincronizacion Inventario", "value": "98.4%", "change": "+2.1%", "trend": "up", "subtitle": "Vs mes anterior" },
+    { "label": "Sincronizacion Inventario", "value": "40.4%", "change": "+2.1%", "trend": "up", "subtitle": "Vs mes anterior" },
     { "label": "SLA de Entregas", "value": "96.5%", "change": "+0.5%", "trend": "up", "subtitle": "Vs mes anterior" },
     { "label": "Optimizacion Compras", "value": "$42.5k", "change": "-1.5%", "trend": "down", "subtitle": "Vs mes anterior" },
     { "label": "Nodos Activos", "value": "1,248", "change": "+7%", "trend": "up", "subtitle": "Vs mes anterior" }

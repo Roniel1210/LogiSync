@@ -103,7 +103,7 @@ node /workspace/scripts/search-repository.cjs --query "{{$json.query.q || ''}}"
 - Command:
 
 ```sh
-node /workspace/scripts/chatbot-query.cjs --question "{{$json.body.question || $json.question || ''}}"
+={{'node /workspace/scripts/chatbot-query.cjs --question ' + JSON.stringify($json.body.question || $json.question || '')}}
 ```
 
 ## Parseo de salida

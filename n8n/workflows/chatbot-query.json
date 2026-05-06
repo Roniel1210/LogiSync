@@ -16,7 +16,7 @@
     },
     {
       "parameters": {
-        "command": "node /workspace/scripts/chatbot-query.cjs --question \"{{$json.body.question || $json.question || ''}}\""
+        "command": "={{'node /workspace/scripts/chatbot-query.cjs --question ' + JSON.stringify($json.body.question || $json.question || '')}}"
       },
       "id": "execute-chatbot",
       "name": "Execute Chatbot Script",

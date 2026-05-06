@@ -10,6 +10,8 @@ services:
       - GENERIC_TIMEZONE=America/Santo_Domingo
       - TZ=America/Santo_Domingo
       - LOGISYNC_DATA_ROOT=/files
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
       - NODES_EXCLUDE=[]
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_RUNNERS_ENABLED=true
