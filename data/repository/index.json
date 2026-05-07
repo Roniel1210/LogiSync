@@ -1,0 +1,31 @@
+{
+  "documents": [
+    {
+      "id": 1,
+      "title": "Contrato Marco Logistics 2024",
+      "type": "CONTRATO",
+      "time": "HACE 2H",
+      "size": "2.4 MB",
+      "match": 94,
+      "path": "data/repository/docs/contrato-marco-logistics-2024.pdf"
+    },
+    {
+      "id": 2,
+      "title": "Guia de Remision GR-8821",
+      "type": "TRANSPORTE",
+      "time": "HACE 5H",
+      "size": "145 KB",
+      "match": 88,
+      "path": "data/repository/docs/gr-8821.pdf"
+    },
+    {
+      "id": 3,
+      "title": "Factura Proveedor TechCorp",
+      "type": "FINANZAS",
+      "time": "AYER",
+      "size": "320 KB",
+      "match": 76,
+      "path": "data/repository/docs/factura-techcorp.pdf"
+    }
+  ]
+}

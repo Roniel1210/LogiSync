@@ -1,0 +1,63 @@
+{
+  "name": "chatbot-query",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "chatbot-query",
+        "httpMethod": "POST",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-chatbot",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300],
+      "webhookId": "8b384b40-72d7-45b2-a8bf-fa67eb10eb45"
+    },
+    {
+      "parameters": {
+        "command": "node /workspace/scripts/chatbot-query.cjs --question \"{{$json.body.question || $json.question || ''}}\""
+      },
+      "id": "execute-chatbot",
+      "name": "Execute Chatbot Script",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.stdout || $json.data || $json.output || Object.values($json)[0];\nreturn [{ json: JSON.parse(raw) }];"
+      },
+      "id": "parse-chatbot",
+      "name": "Parse Chatbot JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-chatbot",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1040, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Execute Chatbot Script", "type": "main", "index": 0 }]]
+    },
+    "Execute Chatbot Script": {
+      "main": [[{ "node": "Parse Chatbot JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Chatbot JSON": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}

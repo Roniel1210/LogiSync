@@ -1,0 +1,63 @@
+{
+  "name": "reports-summary",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "reports-summary",
+        "httpMethod": "GET",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-reports",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300],
+      "webhookId": "03f80ee2-4d3d-4f1d-83b5-9d0f64495dbd"
+    },
+    {
+      "parameters": {
+        "command": "node /workspace/scripts/get-reports-summary.cjs"
+      },
+      "id": "execute-reports",
+      "name": "Execute Reports Script",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.stdout || $json.data || $json.output || Object.values($json)[0];\nreturn [{ json: JSON.parse(raw) }];"
+      },
+      "id": "parse-reports",
+      "name": "Parse Reports JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-reports",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1040, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Execute Reports Script", "type": "main", "index": 0 }]]
+    },
+    "Execute Reports Script": {
+      "main": [[{ "node": "Parse Reports JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Reports JSON": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}

@@ -1,0 +1,63 @@
+{
+  "name": "dashboard-summary",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "dashboard-summary",
+        "httpMethod": "GET",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-dashboard",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300],
+      "webhookId": "90d8e4a5-bd30-4cc0-90c1-5a9ef67b7011"
+    },
+    {
+      "parameters": {
+        "command": "node /workspace/scripts/get-dashboard-summary.cjs"
+      },
+      "id": "execute-dashboard",
+      "name": "Execute Dashboard Script",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.stdout || $json.data || $json.output || Object.values($json)[0];\nreturn [{ json: JSON.parse(raw) }];"
+      },
+      "id": "parse-dashboard",
+      "name": "Parse Dashboard JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-dashboard",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1040, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Execute Dashboard Script", "type": "main", "index": 0 }]]
+    },
+    "Execute Dashboard Script": {
+      "main": [[{ "node": "Parse Dashboard JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Dashboard JSON": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}

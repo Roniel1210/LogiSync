@@ -1,0 +1,63 @@
+{
+  "name": "predictive-summary",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "predictive-summary",
+        "httpMethod": "GET",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-predictive",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300],
+      "webhookId": "43859ea3-c42a-4232-945f-a730223f62bf"
+    },
+    {
+      "parameters": {
+        "command": "node /workspace/scripts/get-predictive-summary.cjs"
+      },
+      "id": "execute-predictive",
+      "name": "Execute Predictive Script",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.stdout || $json.data || $json.output || Object.values($json)[0];\nreturn [{ json: JSON.parse(raw) }];"
+      },
+      "id": "parse-predictive",
+      "name": "Parse Predictive JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
+      },
+      "id": "respond-predictive",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1040, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Execute Predictive Script", "type": "main", "index": 0 }]]
+    },
+    "Execute Predictive Script": {
+      "main": [[{ "node": "Parse Predictive JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Predictive JSON": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "pinData": {}
+}
